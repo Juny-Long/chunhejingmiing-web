@@ -1,2 +1,0 @@
-# chunhejingmiing-web
-chunhejingmiing-web
