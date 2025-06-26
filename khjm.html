@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>春和景明爬山小分队 | 长沙户外登山组织</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-dark: #1b5e20;
+            --secondary: #ff9800;
+            --accent: #4caf50;
+            --light: #f5f9f5;
+            --dark: #1a2e1a;
+            --text: #333;
+            --shadow: 0 4px 20px rgba(0,0,0,0.15);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --gradient: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', 'Segoe UI', sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background-color: var(--light);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        /* 粒子背景 */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(46, 125, 50, 0.95);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+            animation: pulse 2s infinite;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+            position: relative;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            position: relative;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: var(--secondary);
+            transition: var(--transition);
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+        
+        .nav-links a:hover:after {
+            width: 80%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        /* 主横幅区域 */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1511497584788-876760111969') center/cover no-repeat fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            color: white;
+            z-index: 2;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 1s forwards 0.5s;
+        }
+        
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 15px rgba(0,0,0,0.5);
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.6rem;
+            margin-bottom: 2.5rem;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            animation: fadeIn 1.5s ease;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            margin: 0.5rem;
+        }
+        
+        .btn:hover {
+            background: transparent;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* 内容区块 */
+        .section {
+            padding: 8rem 5%;
+            max-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 5rem;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .section-title.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-title h2 {
+            font-size: 3rem;
+            color: var(--primary-dark);
+            display: inline-block;
+            padding-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 5px;
+            background: var(--secondary);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+        
+        /* 关于我们 */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .about-content.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .about-text {
+            padding: 2rem;
+        }
+        
+        .about-text h3 {
+            font-size: 2.2rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+        
+        .about-image {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            height: 500px;
+            position: relative;
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* 组织者介绍 */
+        .organizers-section {
+            background: linear-gradient(to bottom, #f8fff8, #e8f5e9);
+            padding: 8rem 5%;
+        }
+        
+        .organizers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .organizers.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .organizer-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .organizer-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .organizer-img {
+            height: 350px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .organizer-img:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            opacity: 0.7;
+        }
+        
+        .organizer-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .organizer-card:hover .organizer-img img {
+            transform: scale(1.1);
+        }
+        
+        .organizer-info {
+            padding: 2.5rem 2rem;
+            position: relative;
+        }
+        
+        .organizer-info h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+        
+        .organizer-info .role {
+            color: var(--secondary);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        /* 活动展示 */
+        .activities {
+            background: linear-gradient(to bottom right, #e8f5e9, #c8e6c9);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .activity-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .activity-container.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .activity-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .activity-img {
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .activity-img:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+        }
+        
+        .activity-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .activity-card:hover .activity-img img {
+            transform: scale(1.1);
+        }
+        
+        .activity-content {
+            padding: 2rem;
+        }
+        
+        .activity-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+        
+        .activity-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.2rem;
+            font-size: 1rem;
+            color: #777;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .activity-meta i {
+            margin-right: 0.5rem;
+            color: var(--secondary);
+        }
+        
+        .activity-content p {
+            margin-bottom: 1.8rem;
+            line-height: 1.8;
+        }
+        
+        /* 减肥计划 */
+        .weight-loss {
+            background: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438') center/cover fixed;
+            position: relative;
+            color: white;
+        }
+        
+        .weight-loss:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 77, 32, 0.85);
+        }
+        
+        .plan-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .plan-container.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .plan-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .plan-card i {
+            font-size: 3.5rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        .plan-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+        }
+        
+        .plan-card p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+        
+        /* 团队宣言 */
+        .manifesto {
+            background: linear-gradient(135deg, #1b5e20, #388e3c);
+            color: white;
+            text-align: center;
+            padding: 6rem 5%;
+            position: relative;
+        }
+        
+        .manifesto-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .manifesto-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .manifesto-title:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: var(--secondary);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .declaration {
+            font-size: 1.8rem;
+            font-weight: 500;
+            font-style: italic;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .rules {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            text-align: left;
+            backdrop-filter: blur(5px);
+        }
+        
+        .rules h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--secondary);
+        }
+        
+        .rules ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .rules li {
+            margin-bottom: 1.2rem;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+        }
+        
+        .rules li:before {
+            content: '\f00d';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #ff5252;
+            font-size: 1.2rem;
+        }
+        
+        /* 爬山计划 */
+        .mountain-plans {
+            background: linear-gradient(to bottom, #e1f5fe, #bbdefb);
+        }
+        
+        .plans-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .plan-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .plan-header {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .plan-list {
+            padding: 2rem;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .plan-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .plan-item:last-child {
+            border-bottom: none;
+        }
+        
+        .mountain-name {
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        .mountain-details {
+            text-align: right;
+            color: #666;
+        }
+        
+        /* 爬山日志 */
+        .hiking-logs {
+            background: linear-gradient(to bottom, #fff8e1, #ffecb3);
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .timeline:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary);
+            left: 50%;
+            margin-left: -2px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            width: 100%;
+        }
+        
+        .timeline-content {
+            position: relative;
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            width: 45%;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            left: 55%;
+        }
+        
+        .timeline-date {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+        
+        .log-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 6rem 5% 3rem;
+            position: relative;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 4rem;
+            max-width: 1600px;
+            margin: 0 auto 3rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.8rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background: var(--secondary);
+            bottom: 0;
+            left: 0;
+            border-radius: 2px;
+        }
+        
+        .contact-list {
+            list-style: none;
+        }
+        
+        .contact-list li {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .contact-list i {
+            margin-right: 1.2rem;
+            color: var(--secondary);
+            margin-top: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 2rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.4rem;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .hero h1 {
+                font-size: 3.8rem;
+            }
+            
+            .section {
+                padding: 6rem 5%;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.4rem;
+            }
+            
+            .about-content,
+            .stair-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                height: 400px;
+            }
+            
+            .timeline:before {
+                left: 31px;
+            }
+            
+            .timeline-content {
+                width: auto;
+                margin-left: 70px;
+            }
+            
+            .timeline-item:nth-child(even) .timeline-content {
+                left: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
+                background: var(--primary);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 8rem;
+                transition: var(--transition);
+                box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 2rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.5rem;
+            }
+            
+            .organizers,
+            .activity-container,
+            .plan-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .stair-image {
+                height: 400px;
+            }
+            
+            .declaration {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .btn {
+                display: block;
+                margin: 1rem auto;
+                width: 90%;
+                max-width: 300px;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .about-image {
+                height: 300px;
+            }
+            
+            .manifesto-title {
+                font-size: 2rem;
+            }
+            
+            .declaration {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <!-- 导航栏 -->
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <i class="fas fa-mountain"></i>
+                春和景明爬山小分队
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于我们</a></li>
+                <li><a href="#manifesto">团队宣言</a></li>
+                <li><a href="#weight-loss">减肥计划</a></li>
+                <li><a href="#mountain-plans">爬山计划</a></li>
+                <li><a href="#hiking-logs">爬山日志</a></li>
+                <li><a href="#join">加入我们</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 主横幅 -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>攀登岳麓山，感受自然之美</h1>
+            <p>长沙最活跃的户外爬山组织，每周三次岳麓山之行，探索更多长沙周边美景</p>
+            <div class="hero-buttons">
+                <a href="#join" class="btn">立即加入</a>
+                <a href="#mountain-plans" class="btn btn-outline">查看计划</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section class="section" id="about">
+        <div class="section-title">
+            <h2>关于我们</h2>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>春和景明爬山小分队</h3>
+                <p>成立于2019年，是由一群热爱户外运动的登山爱好者自发组成的非营利组织。我们以长沙岳麓山为主要活动基地，每周组织至少3次登山活动，同时也会探索长沙周边的其他自然景观。</p>
+                <p>我们的使命是倡导健康生活方式，推广户外运动文化，让更多人走出家门，感受大自然的魅力。我们坚持"无痕山林"原则，保护自然环境，同时通过登山活动促进社交和身心健康。</p>
+                <p>除了常规登山活动，我们还组织减肥计划、爬楼挑战、户外摄影、自然教育等多种活动，满足不同成员的需求和兴趣。</p>
+                <a href="#join" class="btn">加入我们</a>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4" alt="团队登山">
+            </div>
+        </div>
+    </section>
+
+    <!-- 团队宣言 -->
+    <section class="manifesto" id="manifesto">
+        <div class="manifesto-content">
+            <h2 class="manifesto-title">我们的宣言</h2>
+            <p class="declaration">我们以草木为信，以山风为约，在每一条陡峭的路上，不断的奔赴与重逢中成就更好的自己。</p>
+            
+            <div class="rules">
+                <h3>入群须知</h3>
+                <ul>
+                    <li>这里不是「登山队」，重在体验</li>
+                    <li>允许迷路、喘气、坐在石头上发呆</li>
+                    <li>禁止嘲笑队友的登山杖插进泥里拔不出来</li>
+                </ul>
+            </div>
+            
+            <div class="rules">
+                <h3>群规红线</h3>
+                <ul>
+                    <li>发任何形式的商业团及广告</li>
+                    <li>随意私加好友，骚扰他人</li>
+                    <li>以交友、相亲、谈男女朋友为目的的爬山</li>
+                    <li>转发群友照片或他人信息私下打听议论或做商业用途</li>
+                    <li>发黄、赌、毒以及不雅表情、图片、视频</li>
+                    <li>妄议中央时政及敏感话题</li>
+                </ul>
+            </div>
+            
+            <p style="margin-top: 2rem; font-size: 1.2rem; line-height: 1.8;">
+                其实"春和景明"是骗你们的——我们真正要爬的，是生活这座陡峭的山。<br>
+                遇到岔路就猜拳，输的人负责问路。<br>
+                背包里永远多装一个茶叶蛋给饿哭的队友。
+            </p>
+        </div>
+    </section>
+
+    <!-- 减肥计划 -->
+    <section class="section weight-loss" id="weight-loss">
+        <div class="section-title">
+            <h2>减肥计划</h2>
+        </div>
+        <div class="plan-container">
+            <div class="plan-card">
+                <i class="fas fa-weight-scale"></i>
+                <h3>38天瘦15斤挑战</h3>
+                <p>2025年6月23日--2025年7月31日，三天未记录视作放弃打卡将移除临时群。科学饮食：不节食！三餐均衡、控油糖、戒零食饮料。</p>
+                <a href="https://kdocs.cn/l/chSvhyfUkrAm" target="_blank" class="btn">查看日记</a>
+            </div>
+            <div class="plan-card">
+                <i class="fas fa-utensils"></i>
+                <h3>科学饮食原则</h3>
+                <p>不节食！三餐均衡、控油糖、戒零食饮料。每日少摄入300~500大卡，规律作息：睡够7小时，多喝水！拒绝极端节食伤代谢。</p>
+                <a href="#" class="btn">查看食谱</a>
+            </div>
+            <div class="plan-card">
+                <i class="fas fa-person-running"></i>
+                <h3>合理运动计划</h3>
+                <p>避免空腹运动，餐后1~2小时锻炼最佳。结合登山、爬楼和有氧运动，每周3-5次，每次30-60分钟，循序渐进提升强度。</p>
+                <a href="#" class="btn">查看计划</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 爬山计划 -->
+    <section class="section mountain-plans" id="mountain-plans">
+        <div class="section-title">
+            <h2>爬山计划</h2>
+        </div>
+        <div class="plans-container">
+            <div class="plan-table">
+                <div class="plan-header">近期计划</div>
+                <div class="plan-list">
+                    <div class="plan-item">
+                        <div class="mountain-name">岳麓山心线</div>
+                        <div class="mountain-details">每周多次</div>
+                    </div>
+                    <div class="plan-item">
+                        <div class="mountain-name">神仙岭看日出</div>
+                        <div class="mountain-details">2025年6月</div>
+                    </div>
+                    <div class="plan-item">
+                        <div class="mountain-name">幕阜山</div>
+                        <div class="mountain-details">2025年7月</div>
+                    </div>
+                    <div class="plan-item">
+                        <div class="mountain-name">槟榔谷</div>
+                        <div class="mountain-details">2025年7月</div>
+                    </div>
+                    <div class="plan-item">
+                        <div class="mountain-name">郴州八面山</div>
+                        <div class="mountain-details">2025年7月</div>
+                    </div>
+                    <div class="plan-item">
+                        <div class="mountain-name">酃峰</div>
+                        <div class="mountain-details">2025年8月</div>
+                    </div>
+                    <div class="plan-item">
+                        <div class="mountain-name">齐云峰</div>
+                        <div class="mountain-details">2025年9月</div>
+                    </div>
+                    <div class="plan-item">
+                        <div class="mountain-name">武功山重装正穿</div>
+                        <div class="mountain-details">2025年10月</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="plan-table">
+                <div class="plan-header">未来计划</div>
+                <div class="plan-list">
+                    <div class="plan-item">
+                        <div class="mountain-name">天门山</div>
+                        <div class="mountain-details">2025年11月</div>
+                    </div>
+                    <div class="plan-item">
+                        <div class="mountain-name">麦理浩径</div>
+                        <div class="mountain-details">2025年底</div>
+                    </div>
+                    <div class="plan-item">
+                        <div class="mountain-name">乌孙古道</div>
+                        <div class="mountain-details">暂定</div>
+                    </div>
+                    <div class="plan-item">
+                        <div class="mountain-name">华山</div>
+                        <div class="mountain-details">海拔2155米</div>
+                    </div>
+                    <div class="plan-item">
+                        <div class="mountain-name">恒山</div>
+                        <div class="mountain-details">海拔2016米</div>
+                    </div>
+                    <div class="plan-item">
+                        <div class="mountain-name">泰山</div>
+                        <div class="mountain-details">海拔1545米</div>
+                    </div>
+                    <div class="plan-item">
+                        <div class="mountain-name">嵩山</div>
+                        <div class="mountain-details">海拔1492米</div>
+                    </div>
+                    <div class="plan-item">
+                        <div class="mountain-name">黄山</div>
+                        <div class="mountain-details">海拔1864米</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="https://kdocs.cn/l/cdGgTAvT1Xrb" target="_blank" class="btn">查看完整爬山日历</a>
+        </div>
+    </section>
+
+    <!-- 爬山日志 -->
+    <section class="section hiking-logs" id="hiking-logs">
+        <div class="section-title">
+            <h2>爬山日志</h2>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025年6月24日</div>
+                    <div class="timeline-title">岳麓山心线（挑战减肥版）</div>
+                    <p>编号: (2025)湘002夏010号</p>
+                    <div class="log-details">
+                        <span>领队: 杨杨</span>
+                        <span>参与人数: 5人</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025年6月20日</div>
+                    <div class="timeline-title">岳麓山心线</div>
+                    <p>编号: (2025)湘002夏009号</p>
+                    <div class="log-details">
+                        <span>领队: 杨杨</span>
+                        <span>参与人数: 5人</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025年6月18日</div>
+                    <div class="timeline-title">岳麓山心线</div>
+                    <p>编号: (2025)湘002夏008号</p>
+                    <div class="log-details">
+                        <span>领队: 杨杨、龙龙</span>
+                        <span>参与人数: 6人</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025年6月15日</div>
+                    <div class="timeline-title">三穿加心</div>
+                    <p>编号: (2025)湘002夏007号</p>
+                    <div class="log-details">
+                        <span>领队: 杨杨、龙龙</span>
+                        <span>参与人数: 35人</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025年6月6日</div>
+                    <div class="timeline-title">猫抓老鼠活动</div>
+                    <p>编号: (2025)湘002夏006号</p>
+                    <div class="log-details">
+                        <span>参与人数: 46人</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025年5月25日</div>
+                    <div class="timeline-title">太和仙登山</div>
+                    <p>编号: (2025)湘001春005号</p>
+                    <div class="log-details">
+                        <span>领队: 杨杨、龙龙</span>
+                        <span>参与人数: 24人</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 加入我们 -->
+    <section class="section join-us" id="join">
+        <div class="section-title">
+            <h2>加入我们</h2>
+        </div>
+        <div class="join-content">
+            <p>无论你是登山新手还是资深户外爱好者，只要热爱自然、喜欢运动，都欢迎加入我们的队伍！</p>
+            <a href="#" class="btn" style="background: white; color: var(--primary);">立即报名</a>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <i class="fas fa-mountain"></i>
+                    <div class="number">268</div>
+                    <div class="label">累计登山次数</div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-users"></i>
+                    <div class="number">583</div>
+                    <div class="label">活跃成员</div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-route"></i>
+                    <div class="number">18</div>
+                    <div class="label">特色路线</div>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div class="number">152</div>
+                    <div class="label">年度活动</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>春和景明爬山小分队</h3>
+                <p>长沙最活跃的户外登山组织，每周组织三次以上登山活动，探索长沙及周边自然美景。加入我们，一起感受大自然的魅力！</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-qq"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-douban"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>快速链接</h3>
+                <ul class="contact-list">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#manifesto">团队宣言</a></li>
+                    <li><a href="#weight-loss">减肥计划</a></li>
+                    <li><a href="#mountain-plans">爬山计划</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>联系我们</h3>
+                <ul class="contact-list">
+                    <li>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>湖南省长沙市岳麓区登山爱好者基地</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-phone-alt"></i>
+                        <span>135-1234-5678</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-envelope"></i>
+                        <span>chunhejingming@example.com</span>
+                    </li>
+                    <li>
+                        <i class="fab fa-weixin"></i>
+                        <span>微信: chunhejingming</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023-2025 春和景明爬山小分队 | 长沙户外登山组织 | 非商业性组织</p>
+            <p>我们的生命是一万次的春和景明</p>
+        </div>
+    </footer>
+
+    <!-- 粒子背景库 -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        // 粒子背景初始化
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#4CAF50" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#2E7D32",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, line_linked: { opacity: 1 } },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+
+        // 移动端菜单切换
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // 滚动时导航栏效果
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(46, 125, 50, 0.98)';
+                header.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
+            } else {
+                header.style.background = 'rgba(46, 125, 50, 0.95)';
+                header.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            }
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                navLinks.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 滚动动画效果
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.2
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                }
+            });
+        }, observerOptions);
+        
+        // 观察所有需要动画的元素
+        document.querySelectorAll('.section-title, .about-content, .organizers, .activity-container, .plan-container, .stair-container, .gallery, .join-content').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // 页面加载动画
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+        });
+        
+        // 鼠标移动视差效果
+        document.addEventListener('mousemove', (e) => {
+            const moveX = (e.clientX - window.innerWidth / 2) / 30;
+            const moveY = (e.clientY - window.innerHeight / 2) / 30;
+            
+            document.querySelector('.hero-content').style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+    </script>
+</body>
+</html>
